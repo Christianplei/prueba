@@ -1,0 +1,376 @@
+<%@ page language="java" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles"%>
+<%@ taglib uri="/WEB-INF/extremecomponents.tld" prefix="ec"%>
+
+<%@ page import="java.util.ResourceBundle,org.apache.struts.Globals,java.util.Locale;"%>
+<%ResourceBundle mensajes = ResourceBundle.getBundle("com.aeroman.seguridadae.resource.ApplicationResources",(Locale) request.getSession().getAttribute(Globals.LOCALE_KEY));%>
+
+<tiles:insert name="plantillaBase" definition="plantillaBase">
+
+	<tiles:put name="base">
+		<html:base />
+	</tiles:put>
+	
+	<tiles:put name="scripts">
+		<script type="text/javascript" language="javascript">
+		
+			function tableClick( correlativoUsuario, estadocodigoUsuario
+                                   ,  estadonombreUsuario,  emailUsuario,  codigocentrodecosto
+                                   ,  nombrecentrodecosto,  nombreUsuario,  puestoUsuario
+                                   ,  codigogerencia,  nombregerencia,  codigodireccion
+                                   ,  nombredireccion,  primernombreUsuario,  segundonombreUsuario
+                                   ,  primerapellidoUsuario,  segundoapellidoUsuario,  nombrecontableUsuario
+                                   ,  codigoM4,  codigo86,  primerIngresoUsuario,  usuarioTipo, nombrePuestoUsuario){
+                                $('#correlativoUsuario').val(correlativoUsuario);
+                                $('#estadocodigoUsuario').val(estadocodigoUsuario);
+                                //$('#estadonombreUsuario').val(estadonombreUsuario);
+                                $('#emailUsuario').val(emailUsuario);
+                                $('#codigocentrodecosto').val(codigocentrodecosto);
+                                $('#nombrecentrodecosto').val(nombrecentrodecosto);
+                                $('#nombreUsuario').val(nombreUsuario);
+                                $('#puestoUsuario').val(puestoUsuario);
+                                $('#nombrePuestoUsuario').val(nombrePuestoUsuario);
+                                $('#codigogerencia').val(codigogerencia);
+                                $('#nombregerencia').val(nombregerencia);
+                                $('#codigodireccion').val(codigodireccion);
+                                $('#nombredireccion').val(nombredireccion);
+                                $('#primernombreUsuario').val(primernombreUsuario);
+                                $('#segundonombreUsuario').val(segundonombreUsuario);
+                                $('#primerapellidoUsuario').val(primerapellidoUsuario);
+                                $('#segundoapellidoUsuario').val(segundoapellidoUsuario);
+                                $('#nombrecontableUsuario').val(nombrecontableUsuario);
+                                $('#codigoM4').val(codigoM4);
+                                $('#codigo86').val(codigo86);
+                                //$('#primerIngresoUsuario').val(primerIngresoUsuario);
+                                $('#usuarioTipo').val(usuarioTipo);
+                                
+                                mostrarvalores(usuarioTipo);
+				habilitar();
+			}
+                        
+                        function mostrarvalores(tipodeusarioIndice){
+                              
+                              if(tipodeusarioIndice == 'E'){
+                                     document.getElementById('nombrecentrodecosto').style.display = "none";
+                                     document.getElementById('userinteriorcodigo').style.display = "none";
+                                     document.getElementById('codigoM4interiortext').style.display = "none";
+                                     document.getElementById('codigoM4interior').style.display = "none";
+                                     document.getElementById('puestointerno').style.display = "none";
+                                     document.getElementById('gerenciainterna').style.display = "inline";
+                                     document.getElementById('btnEmpleados').style.display = "none";
+                                     document.getElementById('userexteriorcodigo').style.display = "inline";
+                                     
+                                     document.getElementById('codigo86').readOnly = false;
+                                     document.getElementById('nombreUsuario').readOnly = false;
+                                     document.getElementById('primernombreUsuario').readOnly = false;
+                                     document.getElementById('segundonombreUsuario').readOnly = false;
+                                     document.getElementById('primerapellidoUsuario').readOnly = false;
+                                     document.getElementById('segundoapellidoUsuario').readOnly = false;
+                              }
+                              else{
+                                     document.getElementById('nombrecentrodecosto').style.display = "inline";
+                                     document.getElementById('userinteriorcodigo').style.display = "inline";
+                                     document.getElementById('codigoM4interiortext').style.display = "inline";
+                                     document.getElementById('codigoM4interior').style.display = "table-cell";
+                                     document.getElementById('puestointerno').style.display = "inline";
+                                     document.getElementById('gerenciainterna').style.display = "inline";
+                                     //document.getElementById('btnEmpleados').style.display = "inline";
+                                     document.getElementById('userexteriorcodigo').style.display = "none";
+                                     
+                                     document.getElementById('codigo86').readOnly = true;
+                                     document.getElementById('nombreUsuario').readOnly = true;
+                                     document.getElementById('primernombreUsuario').readOnly = true;
+                                     document.getElementById('segundonombreUsuario').readOnly = true;
+                                     document.getElementById('primerapellidoUsuario').readOnly = true;
+                                     document.getElementById('segundoapellidoUsuario').readOnly = true;
+                              }
+                        }
+			
+			function habilitar(){
+				$('#accionInsert').SlideOutDown('fast',$('#accionUpdate').SlideInDown('slow'));
+			}
+			
+			var flag = "in";
+	      	function pulsateMessaje(){	                        
+	        	if(flag == "in"){          
+	          		flag = "out";
+	          		$('#mensaje').DropInRight(1000);
+	          		setTimeout('pulsateMessaje()',5000);
+	        	}
+	        	else 
+	        		if(flag == "out"){          
+	          			flag = "in";
+	          			$('#mensaje').DropOutRight(1000);	          			
+	        	}
+	      	}
+			
+        function enviarFormulario(){
+		    var formulario= document.getElementById('formulariodos');
+	            var href = formulario.action;	
+                    
+                   // document.getElementById("codencuestados").value = document.getElementById("codencuesta").value;
+                  //  $('#codencuestados').val(codencuesta);
+                    //var href = "DimensionesAction.do"
+	            if(href.indexOf('?') >0 ){
+	              href= href.substring(0,href.indexOf('?'));
+	            }
+	            href+='?accion=Find';
+	            formulario.action= href;	                          
+	            formulario.submit();	
+       } 
+       
+       function borrarGerDireccion(){
+               document.getElementById('nombregerencia').value = ' ';
+               document.getElementById('nombredireccion').value = ' ';       
+       }
+       
+       function validarBotonGer(){
+               var hiddenDireccion = document.getElementById("codigodireccion").value;
+               document.getElementById("codigogerencia").value = "";
+               document.getElementById("nombregerencia").value = "";
+               if(hiddenDireccion == ''){
+                      document.getElementById("btnGerencias").style.display = "none";
+               }else{
+                      document.getElementById("btnGerencias").style.display = "inline";
+               }
+       }
+		</script>
+	</tiles:put>
+
+	<tiles:put name="title" type="String">
+		<bean:message key="usuarios.titulo" />
+	</tiles:put>
+
+	<tiles:put name="encabezado" type="String">
+		<bean:message key="usuarios.encabezado" />
+	</tiles:put>
+
+	<tiles:put name="contenido" type="String">
+        <html:form action="/admUsuarioAction.do">
+                <center>
+                        <table class="tableDefault">
+                            <tr>
+                                <td>
+                                    <center>
+                                        <table class="centerTableContentFormTop2">
+                                            <tr>
+                                                    <th>
+                                                                    <bean:message key="usuarios.usuarioTipo"/>
+                                                    </th>
+                                                    <td>
+                                                            <html:hidden property="correlativoUsuario" styleId="correlativoUsuario" />
+                                                            <html:select property="usuarioTipo" styleId="usuarioTipo" onchange="mostrarvalores(document.getElementById('usuarioTipo').options[document.getElementById('usuarioTipo').selectedIndex].value) " > 
+                                                                <html:option value= "I" ><%=mensajes.getString("usuarios.usuarioTipo.interno")%></html:option>
+                                                                <html:option value= "E" ><%=mensajes.getString("usuarios.usuarioTipo.externo")%></html:option>
+                                                            </html:select>	
+                                                    </td>
+                                                    <th>
+                                                            <bean:message key="usuarios.estadonombreUsuario"/>
+                                                    </th>
+                                                    <td>
+                                                            <html:select property="estadocodigoUsuario" styleId="estadocodigoUsuario" > 
+                                                                <html:option value= "ACT" ><%=mensajes.getString("usuarios.estadonombreUsuario.activo")%></html:option>
+                                                                <html:option value= "INA" ><%=mensajes.getString("usuarios.estadonombreUsuario.inactivo")%></html:option>
+                                                            </html:select>	
+                                                    </td>
+                                            </tr>
+                                            <tr>
+                                                    <th style="width: 209px !important;">
+                                                            <span id="userinteriorcodigo"><bean:message key="usuarios.codigo86"/></span>
+                                                            <span id="userexteriorcodigo"><bean:message key="usuarios.codigo86ext"/></span>
+                                                            
+                                                    </th>
+                                                    <td style="width: 330px !important;">
+                                                            <html:text property="codigo86" styleId="codigo86" size="30" maxlength="10" styleClass="caja_texto_obligatorio" readonly="true" ></html:text>
+                                                            <input type="button" id="btnEmpleados" onclick="abrirVentana('ldvAction.do?xmlArchivo=usuariointerno');" value="..."/>
+                                                            <html:messages id="message" footer="errores.pie" header="errores.cabecera" property="usuarios.codigo86.requerido">
+                                                                <br><span class="error" > <bean:write name="message" filter="false" /> </span>
+                                                            </html:messages>
+                                                    </td>
+                                                    <th id="codigoM4interior">
+                                                            <bean:message key="usuarios.codigoM4"/>
+                                                    </th>
+                                                    <td id="codigoM4interiortext">
+                                                         <html:text property="codigoM4" styleId="codigoM4" size="30" maxlength="50" styleClass="caja_texto_obligatorio" readonly="true" ></html:text>
+                                                    </td>
+                                            </tr>
+                                            <tr>
+                                                    <th>
+                                                            <bean:message key="usuarios.nombreUsuario"/>
+                                                    </th>
+                                                    <td>
+                                                            <html:hidden property="nombrecontableUsuario" styleId="nombrecontableUsuario" />
+                                                            <html:text property="nombreUsuario" styleId="nombreUsuario" size="30" maxlength="254" styleClass="caja_texto_obligatorio" readonly="true" ></html:text>
+                                                            <html:messages id="message" footer="errores.pie" header="errores.cabecera" property="usuarios.nombreUsuario.requerido">
+                                                                <br><span class="error" > <bean:write name="message" filter="false" /> </span>
+                                                            </html:messages>
+                                                    </td>
+                                                    <th>
+                                                            <bean:message key="usuarios.primernombreUsuario"/>
+                                                    </th>
+                                                    <td>
+                                                         <html:text property="primernombreUsuario" styleId="primernombreUsuario" size="30" maxlength="250" styleClass="caja_texto_obligatorio" readonly="true" ></html:text>
+                                                    </td>
+                                            </tr>
+                                            <tr>
+                                                    <th>
+                                                            <bean:message key="usuarios.segundonombreUsuario"/>
+                                                    </th>
+                                                    <td>
+                                                            <html:text property="segundonombreUsuario" styleId="segundonombreUsuario" size="30" maxlength="254" styleClass="caja_texto_obligatorio" readonly="true" ></html:text>
+                                                    </td>
+                                                    <th>
+                                                            <bean:message key="usuarios.primerapellidoUsuario"/>
+                                                    </th>
+                                                    <td>
+                                                            <html:text property="primerapellidoUsuario" styleId="primerapellidoUsuario" size="30" maxlength="250" styleClass="caja_texto_obligatorio" readonly="true" ></html:text>
+                                                    </td>
+                                            </tr>
+                                            <tr>
+                                                    <th>
+                                                            <bean:message key="usuarios.segundoapellidoUsuario"/>
+                                                    </th>
+                                                    <td>
+                                                            <html:text property="segundoapellidoUsuario" styleId="segundoapellidoUsuario" size="30" maxlength="254" styleClass="caja_texto_obligatorio" readonly="true" ></html:text>
+                                                    </td>
+                                                    <th>
+                                                            <bean:message key="usuarios.emailUsuario"/>
+                                                    </th>
+                                                    <td>
+                                                            <html:text property="emailUsuario" styleId="emailUsuario" size="30" maxlength="100" styleClass="caja_texto_obligatorio" ></html:text>
+                                                    </td>
+                                            </tr>
+                                            </table>
+                                            
+                                            <table style="table-layout:fixed; width: 100%;">
+                                                <tr id="puestointerno">
+                                                        <td id="puestointerno_1" width="212" style="color: #000000;font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;font-size: 11px;font-weight: 600;">
+                                                                <bean:message key="usuarios.puestoUsuario"/>
+                                                        </td>
+                                                        <td id="puestointerno_2" width="100">
+                                                                <html:hidden property="puestoUsuario" styleId="puestoUsuario" /> 
+                                                                <html:text property="nombrePuestoUsuario" styleId="nombrePuestoUsuario" size="30" maxlength="254" styleClass="caja_texto_obligatorio" readonly="true" ></html:text>
+                                                        </td>
+                                                        <td id="puestointerno_3" width="260" style="text-align: right;color: #000000;font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;font-size: 11px;font-weight: 600;">
+                                                                <bean:message key="usuarios.nombrecentrodecosto"/>
+                                                        </td>
+                                                        <td id="puestointerno_4" width="100">
+                                                                <html:hidden property="codigocentrodecosto" styleId="codigocentrodecosto" />
+                                                                <html:text property="nombrecentrodecosto" styleId="nombrecentrodecosto" size="30" maxlength="100" styleClass="caja_texto_obligatorio" readonly="true" ></html:text>
+                                                        </td>
+                                                </tr>
+                                            </table>
+                                            
+                                            <table style="table-layout:fixed; width: 100%;" >
+                                                <tr id="gerenciainterna">
+                                                        <td id="gerenciainterna_1" width="260" style="color: #000000;font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;font-size: 11px;font-weight: 600;">
+                                                                <bean:message key="usuarios.nombredireccion"/>
+                                                        </td>
+                                                        <td id="gerenciainterna_2" width="258">
+                                                                <html:hidden property="codigodireccion" styleId="codigodireccion" onchange="validarBotonGer();" />
+                                                                <html:text property="nombredireccion" styleId="nombredireccion" size="20" maxlength="100" readonly="true" ></html:text>
+                                                                <input type="button" id="btnEmpleados" onclick="abrirVentana('ldvAction.do?xmlArchivo=direccion');" value="..."/>
+                                                        </td>
+                                                        <td id="gerenciainterna_3" width="240" style="text-align: right;color: #000000;font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;font-size: 11px;font-weight: 600;">
+                                                                <bean:message key="usuarios.nombregerencia"/>
+                                                        </td>
+                                                        <td id="gerenciainterna_4" width="100">
+                                                                <html:hidden property="codigogerencia" styleId="codigogerencia" />
+                                                                <html:text property="nombregerencia" styleId="nombregerencia" size="20" maxlength="254" readonly="true" ></html:text>
+                                                                <input type="button" id="btnGerencias" style="display:none;" onclick="abrirVentana('ldvAction.do?xmlArchivo=gerencia&codigodireccion='+document.getElementById('codigodireccion').value);" value="..."/>
+                                                        </td>
+                                                </tr>
+                                            </table>
+                                            
+                                            
+                                            
+                                    </center>
+                                </td>
+                            </tr>
+                        </table>
+                        <html:messages id="message" footer="errores.pie" header="errores.cabecera" property="usuarios.mensaje.exito">		          
+                              <div id="mensaje" >
+                                     <bean:write name="message" filter="false" /> 
+                              </div>
+                              <script type="text/javascript" language="javascript">
+                                    pulsateMessaje();
+                              </script>
+                        </html:messages>
+                        <html:messages id="message" footer="errores.pie" header="errores.cabecera" property="usuarios.mensaje.error">		          
+                              <div id="mensaje" >
+                                     <bean:write name="message" filter="false" /> 
+                              </div>
+                        </html:messages>
+                        <div id="accionInsert" class="accion" >								
+                                <html:submit property="accion" styleId="insert"  >
+                                        <bean:message key="opc.insert"/>
+                                </html:submit>					
+                                <html:submit property="accion" styleId="cancel"  >
+                                        <bean:message key="opc.cancel"/>
+                                </html:submit>
+                                <html:button property="borrarGerDir"   onclick="borrarGerDireccion()" style="width:200px;"  >
+                                        <bean:message key="opc.borrarGerDir"/>
+                                </html:button> 
+                        </div>
+                        <div id="accionUpdate" class="accion" style="display:none">
+                                <html:submit property="accion" styleId="update"  >
+                                        <bean:message key="opc.update"/>
+                                </html:submit>
+                                <html:submit property="accion" styleId="delete"  >
+                                        <bean:message key="opc.delete"/>
+                                </html:submit>
+                                <html:submit property="accion" styleId="cancel"   >
+                                        <bean:message key="opc.cancel"/>
+                                </html:submit>
+                                <html:button property="accion" styleId="cancel"   onclick="document.forms[0].action='resetPswAction.do';document.forms[0].submit()" style="width:160px;" >
+                                        <bean:message key="opc.reset.password"/>
+                                </html:button>
+                                <html:button property="borrarGerDir" onclick="borrarGerDireccion()" style="width:200px;"    >
+                                        <bean:message key="opc.borrarGerDir"/>
+                                </html:button> 
+                        </div>
+                        
+                        <hr width="85%"  >
+                        
+                </center>
+                <logic:equal parameter="accion" value='<%=mensajes.getString("opc.update")%>'>
+                        <script type="text/javascript" language="javascript" >
+                                habilitar();
+                        </script>
+                </logic:equal>	
+                <script type="text/javascript" language="javascript" >
+                                mostrarvalores(document.getElementById('usuarioTipo').options[document.getElementById('usuarioTipo').selectedIndex].value);
+                </script>
+	</html:form>
+		
+		<ec:table items="listUsuarios" 
+				var="mapf" locale='<%=mensajes.getString("extremecomponents.locale")%>'
+				action="${pageContext.request.contextPath}/admUsuarioAction.do?accion=Find" 
+				imagePath="${pageContext.request.contextPath}/images/table/compact/*.gif" 
+				title='<%=mensajes.getString("usuarios.encabezado")%>'
+				view="compact"
+				width="80%"
+				tableId="tableSistemas"
+				autoIncludeParameters="yes" scope="request"  >
+				<ec:row highlightRow="true" onclick="tableClick('${pageScope.mapf.correlativoUsuario}', '${pageScope.mapf.estadocodigoUsuario}'
+                                   , '${pageScope.mapf.estadonombreUsuario}', '${pageScope.mapf.emailUsuario}', '${pageScope.mapf.codigocentrodecosto}'
+                                   , '${pageScope.mapf.nombrecentrodecosto}', '${pageScope.mapf.nombreUsuario}', '${pageScope.mapf.puestoUsuario}'
+                                   , '${pageScope.mapf.codigogerencia}', '${pageScope.mapf.nombregerencia}', '${pageScope.mapf.codigodireccion}'
+                                   , '${pageScope.mapf.nombredireccion}', '${pageScope.mapf.primernombreUsuario}', '${pageScope.mapf.segundonombreUsuario}'
+                                   , '${pageScope.mapf.primerapellidoUsuario}', '${pageScope.mapf.segundoapellidoUsuario}', '${pageScope.mapf.nombrecontableUsuario}'
+                                   , '${pageScope.mapf.codigoM4}', '${pageScope.mapf.codigo86}', '${pageScope.mapf.primerIngresoUsuario}', '${pageScope.mapf.usuarioTipo}'
+                                   , '${pageScope.mapf.nombrePuestoUsuario}' 
+                                 );">
+					<ec:column property="correlativoUsuario" title='<%=mensajes.getString("usuarios.correlativoUsuario")%>' width="10%" />	
+                                        <ec:column property="codigo86" title='<%=mensajes.getString("usuarios.codigo86ext")%>' width="30%" />	
+                                        <ec:column property="nombreUsuario" title='<%=mensajes.getString("usuarios.nombreUsuario")%>' width="60%" />	
+				</ec:row>
+			</ec:table>
+		<BR>
+		
+	</tiles:put>
+
+</tiles:insert>
